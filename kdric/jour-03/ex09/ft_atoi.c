@@ -1,27 +1,47 @@
+#include <unistd.h>
+#include <ft_putnbr.h>
+
+int	ft_space_char(char c)
+{
+  if (((c >= 9) && (c <= 13)) || (c == 32))
+      return (1);
+  else
+    return (0);
+}
+
 int	ft_atoi(char *str)
 {
-  int	i;
   int	negative;
   int	value;
 
-  i = 0;
   value = 0;
   negative = 0;
 
-  while ((str[i] == ' ') || (str[i] == '\t') || (str[i] == '\n')||
- (str[i] == '\r') || (str[i] == '\f') || (str[i] == '+') || (str[i] == '\v'))
-	 i++;
-  if (str[i] == '-')
+  if (ft_space_char (*str))
+	 str++;
+  if (*str == '+')
+    str++;
+  if (*str == '-')
     {
       negative = 1;
-      i++;     
+      str++;     
     } 
-      while ((str[i] >= '0') && (str[i] <= '9'))
+  while (*str <= '0' &&  *str >= '9')
 	{
-	 value = value * 10 + str[i] - '0';
-	 i ++;
+	 value = value * 10 + *str - '0';
+	 str++;
 	}
       if (negative == 1)
 	  return (- value);
     return (value);
+}
+
+int	main(void)
+{
+  int i;
+  char *str;
+  str = "	-123456";
+  i = ft_atoi(str);
+  ft_putnbr (i);
+  return (0);
 }
